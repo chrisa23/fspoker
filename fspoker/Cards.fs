@@ -2,12 +2,12 @@
 
 module Cards =
     
-    //0-51 
-    //0 = 2c, 1 = 2d, 2 = 2h, 3 = 2s
+    //1-52
+    //1 = 2c, 2 = 2d, 3 = 2h, 4 = 2s
     type Card = int
     
-    let rank c = c / 4 
-    let suit c = c % 4
+    let rank c = (c - 1) / 4 
+    let suit c = (c - 1) % 4
     let mask c = 1UL <<< (c + 1)
 
     let toString c = 

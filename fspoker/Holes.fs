@@ -10,23 +10,27 @@ module Holes =
     //lo is in this form to force return of second item if equal ranks
     let lo (c1, c2) = if (c1 |> rank) > (c2 |> rank) then c2 else c1
 
+    let hiRank = hi >> rank
+    let loRank = lo >> rank
+
     let suited (c1, c2) = suit c1 = suit c2
     let paired (c1, c2) = rank c1 = rank c2
 
     let index169 h = 
         let v = if suited h
-                then (h |> lo |> rank) * 13 + (h |> hi |> rank)
-                else (h |> hi |> rank) * 13 + (h |> lo |> rank)
+                then (h |> loRank) * 13 + (h |> hiRank)
+                else (h |> hiRank) * 13 + (h |> loRank)
         168 - v
 
     let toString h = (h |> hi |> toString) + (h |> lo |> toString)
 
     let shortString h = 
-        string (h |> hi |> rank) + 
-        string (h |> lo |> rank) + 
+        string (h |> hiRank) + 
+        string (h |> loRank) + 
         if suited h then "s" else "o"
        
     let chkMask a b = a &&& b = 0UL
+
     let mask (c1,c2) = mask c1 ||| mask c2
 
     let equals h1 h2 = mask h1 = mask h2

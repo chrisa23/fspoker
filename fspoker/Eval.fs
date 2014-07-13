@@ -11,9 +11,10 @@ module Eval =
             for i in 0..32487833 -> br.ReadInt32() |]
 
     let eval7 a b c d e f g = hr.[hr.[hr.[hr.[hr.[hr.[hr.[53 + a] + b] + c] + d] + e] + f] + g]
-    let eval6 a b c d e f  = hr.[hr.[hr.[hr.[hr.[hr.[53 + a] + b] + c] + d] + e] + f] 
-    let eval5 a b c d e  = hr.[hr.[hr.[hr.[hr.[53 + a] + b] + c] + d] + e] 
+    let eval6 a b c d e f  =hr.[hr.[hr.[hr.[hr.[hr.[hr.[53 + a] + b] + c] + d] + e] + f]]
+    let eval5 a b c d e  = hr.[hr.[hr.[hr.[hr.[hr.[53 + a] + b] + c] + d] + e]]
 
+    
     let handType x = x >>> 12
 
     let evalFlop b1 b2 b3 (h1, h2) = eval5 b1 b2 b3
@@ -26,13 +27,13 @@ module Eval =
 
         
     type HandType =
-        | HighCard = 9
-        | OnePair = 8
-        | TwoPair = 7
-        | ThreeOfAKind = 6
-        | Straight = 5 
-        | Flush = 4
-        | FullHouse = 3
-        | FourOfAKind = 2 
-        | StraightFlush = 1
+        | HighCard = 1
+        | OnePair = 2
+        | TwoPair = 3
+        | ThreeOfAKind = 4
+        | Straight = 5
+        | Flush = 6
+        | FullHouse = 7
+        | FourOfAKind = 8
+        | StraightFlush = 9
     
