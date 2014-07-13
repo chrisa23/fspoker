@@ -8,7 +8,7 @@ module Cards =
     
     let rank c = (c - 1) / 4 
     let suit c = (c - 1) % 4
-    let mask c = 1UL <<< (c + 1)
+    let mask c = 1UL <<< c
 
     let toString c = 
             
