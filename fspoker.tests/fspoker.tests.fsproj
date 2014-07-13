@@ -50,8 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardTests.fs" />
+    <Compile Include="HoleTests.fs" />
     <None Include="packages.config" />
     <None Include="app.config" />
+    <Compile Include="EvalTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\fspoker\fspoker.fsproj">

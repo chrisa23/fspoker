@@ -11,35 +11,21 @@ module CardTests =
     
     [<Test>] 
     let RandomTests() = 
-       1 |> toString |> should equal "2c"
-       "2c" |> fromString |> rank |> should equal 0
-       "2d" |> fromString |> rank |> should equal 0
-       "2s" |> fromString |> rank |> should equal 0
-       "2h" |> fromString |> rank |> should equal 0
-       "Ac" |> fromString |> rank |> should equal 12
-       "Td" |> fromString |> rank |> should equal 8
-       
-
-[<TestFixture>]
-module EvalTests =
     
-    open Cards
-    open Eval   
+       1 |> toString |> should equal "2c"
+       2 |> toString |> should equal "2d"
+       3 |> toString |> should equal "2h"
+       "2c" |> card |> rank |> should equal 0
+       "2d" |> card |> rank |> should equal 0
+       "2s" |> card |> rank |> should equal 0
+       "2h" |> card |> rank |> should equal 0
+       "Ac" |> card |> rank |> should equal 12
+       "Td" |> card |> rank |> should equal 8
 
-    //run manually since opening Eval is time consuming
-    [<Test; Ignore>] 
-    let HandTypeTests() = 
-        let h = eval7 1 5 9 13 17 19 20 
-        let ht = handType h
-        printf "%A %A\n" h ht
-        ht |> should equal 9
-        let h = eval7 1 2 3 4 16 18 19 
-        let ht = handType h
-        printf "%A %A\n" h ht
-        ht |> should equal 8
-        let h = eval5 1 2 3 4 16 
-        let ht = handType h
-        printf "%A %A\n" h ht
-        ht |> should equal 8
+       "2c" |> card |> suit |> should equal 0
+       "2d" |> card |> suit |> should equal 1
+       "2h" |> card |> suit |> should equal 2
+       "2s" |> card |> suit |> should equal 3
        
+
         

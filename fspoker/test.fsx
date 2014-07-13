@@ -1,7 +1,11 @@
 ﻿
-#load "Eval.fs"
+
 #load "Cards.fs"
-#load "Holes.fs"
-#load "Ranges.fs"
 open fspoker
+open Cards
+#load "Holes.fs"
+open Holes
+#load "Ranges.fs"
+open Ranges
+
 

@@ -56,11 +56,11 @@ module Ranges =
        //TODO | a when a.Contains("-") ->
         | _ ->
             match hl.Length with
-            | 4 -> Hole(Holes.fromString hl)
-            | 3 -> Range(Holes.fromShortString hl |> Array.toList)
+            | 4 -> Hole(hole hl)
+            | 3 -> Range(holes hl |> Array.toList)
             | 2 -> 
-                if hl.[0] = hl.[1] then Range(Holes.fromShortString(hl + "o") |> Array.toList)
-                else Range ((Holes.fromShortString(hl + "o") |> Array.toList ) @ (Holes.fromShortString(hl + "s") |> Array.toList))
+                if hl.[0] = hl.[1] then Range(holes(hl + "o") |> Array.toList)
+                else Range ((holes(hl + "o") |> Array.toList ) @ (holes(hl + "s") |> Array.toList))
             | _ -> raise BadRange
         
     let getRange (hl:string) = 

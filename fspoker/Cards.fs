@@ -10,32 +10,30 @@ module Cards =
     let suit c = (c - 1) % 4
     let mask c = 1UL <<< c
 
-    let toString c = 
-            
-        let rankToString r = 
-            match r with
-            | 12 -> "A"
-            | 11 -> "K"
-            | 10 -> "Q"
-            | 9 -> "J"
-            | 8 -> "T"
-            | a when a >= 0 && a < 8 -> (a + 2).ToString()
-            | _ -> "?"
+    let rankToString r = 
+        match r with
+        | 12 -> "A"
+        | 11 -> "K"
+        | 10 -> "Q"
+        | 9 -> "J"
+        | 8 -> "T"
+        | a when a >= 0 && a < 8 -> (a + 2).ToString()
+        | _ -> "?"
 
-        let suitToString s = 
-            match s with
-            | 0 -> "c"
-            | 1 -> "d"
-            | 2 -> "h"
-            | 3 -> "s"
-            | _ -> "?"
-    
-        (rankToString (rank c)) + (suitToString (suit c))
+    let suitToString s = 
+        match s with
+        | 0 -> "c"
+        | 1 -> "d"
+        | 2 -> "h"
+        | 3 -> "s"
+        | _ -> "?"
+
+    let toString c = (rankToString (rank c)) + (suitToString (suit c))
 
     let cardsByString = 
         [|1..52|] 
         |> Array.map (fun c -> toString c, c) 
         |> Map.ofArray
     
-    let fromString s = cardsByString.[s]
+    let card s = cardsByString.[s]
 
