@@ -20,6 +20,8 @@ module Eval =
     let evalFlop b1 b2 b3 (h1, h2) = eval5 b1 b2 b3
     let evalTurn b1 b2 b3 b4 (h1, h2) = eval6 b1 b2 b3 b4
     let evalRiver b1 b2 b3 b4 b5 (h1, h2) = eval7 b1 b2 b3 b4 b5
+    
+    let eval (b1, b2, b3, b4, b5) (h1, h2) = eval7 b1 b2 b3 b4 b5 h1 h2
 
     let getHoleEval (h1,h2) = eval7 h1 h2
     let getHoleEval6 (h1,h2) = eval6 h1 h2

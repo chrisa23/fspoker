@@ -37,3 +37,5 @@ module Cards =
     
     let card s = cardsByString.[s]
 
+    let chkCards a b = mask a &&& mask b = 0UL
+

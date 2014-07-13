@@ -12,10 +12,10 @@ module HoleTests =
     [<Test>] 
     let RandomTests() = 
         let h = Holes.create 1 2
-        h |> should equal (1, 2)
-        h|> toString |> printfn "%A"
-        "AdAs" |> hole |> hiRank |> should equal 12
-        "AsAd" |> hole |> hiRank |> should equal 12
-        "AdKd" |> hole |> hiRank |> should equal 12
-        "AdKd" |> hole |> suited |> should equal true
+        h.Cards |> should equal (1, 2)
+        h.Cards |> toString |> printfn "%A"
+        "AdAs" |> hole |> cards |> hiRank |> should equal 12
+        "AsAd" |> hole |> cards |> hiRank |> should equal 12
+        "AdKd" |> hole |> cards |> hiRank |> should equal 12
+        "AdKd" |> hole |> cards |> suited |> should equal true
         "AAo" |> holes |> Array.length |> should equal 6

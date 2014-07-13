@@ -40,6 +40,8 @@
     <Compile Include="Cards.fs" />
     <Compile Include="Holes.fs" />
     <Compile Include="Ranges.fs" />
+    <Compile Include="Boards.fs" />
+    <Compile Include="Equity.fs" />
     <None Include="test.fsx" />
   </ItemGroup>
   <ItemGroup>
