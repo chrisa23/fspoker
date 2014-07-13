@@ -33,7 +33,7 @@ module Cards =
         (rankToString (rank c)) + (suitToString (suit c))
 
     let cardsByString = 
-        [|0..51|] 
+        [|1..52|] 
         |> Array.map (fun c -> toString c, c) 
         |> Map.ofArray
     
