@@ -52,10 +52,3 @@ module Equity =
 
     let getEquities (holes:string[]) (nholes:int) (nboards:int) = evalHands (getHoles holes) nholes nboards
 
-//    let getAllVals (holes:string[])  =
-//        hole169Map
-//        |> Seq.map (fun a -> 
-//            let hls = Array.append [|a.Key;|] holes
-//            a.Key,(getEquities hls 1000 10).[0])
-
-
