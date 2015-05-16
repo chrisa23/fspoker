@@ -36,7 +36,7 @@ module Equity =
             if m &&& (bd |> snd) = 0UL then bd |> fst
             elif (c-1) > 0 then tryPick msk (c-1) 
             else raise BadRange
-        tryPick msk 100 
+        tryPick msk 1000 
 
     let getRndBoards n msk = [|for p in 1..n -> rndBoard msk|] 
 
@@ -45,7 +45,7 @@ module Equity =
     let evalHands (ranges:Range[]) t x = 
         let r =
             getXHoles ranges t
-            |> Array.map (runBoards x)//Can be parralel
+            |> Array.map (runBoards x)//Can be parralel, but board choose function messes up with .Net Array.Parallel, but not with Flying Frog dll.
             |> Array.fold sumArrays (Array.create ranges.Length 0.)
         let t = float (Array.sum r)
         Array.map (fun x -> x/t) r

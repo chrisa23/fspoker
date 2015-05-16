@@ -96,7 +96,7 @@ module Holes =
     let holes s = hole169Map.[s] 
 
     //ShortString -> Index169
-    let private hole169IndexMap = 
+    let hole169IndexMap = 
         allHoles
         |> Seq.groupBy (fun h -> h.Cards |> shortString)
         |> Seq.map (fun (a,b) -> a,  b |> Seq.nth 0 |> (fun x -> x.Cards) |> index169)

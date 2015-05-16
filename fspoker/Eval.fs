@@ -4,7 +4,7 @@ module Eval =
 
     open System.IO
     
-    let private dataLocation = "D:\HandRanks.dat"
+    let private dataLocation = "X:\HandRanks.dat"
 
     let hr = 
         [|  use br = new BinaryReader(File.OpenRead(dataLocation))
