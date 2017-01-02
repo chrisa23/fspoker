@@ -1,9 +1,13 @@
 ﻿namespace fspoker
 
 module Holes = 
-
+    open System
     open Cards
-
+    
+    let private r = new Random((int)DateTime.Now.Ticks);
+    
+    exception CantFindHole
+    
     [<CustomComparison; CustomEquality>]
     type Hole = 
       { 
@@ -77,6 +81,8 @@ module Holes =
             for j in [i+1..52] ->
                create i j|]
 
+    let holeLength = allHoles.Length
+
     //String -> Hole
     let private holesByString = 
         let first = allHoles |> Array.map (fun x -> toString x.Cards, x) 
@@ -103,3 +109,13 @@ module Holes =
         |> Map.ofSeq
 
     let index s = hole169IndexMap.[s] 
+
+    let rhole() = allHoles.[r.Next(holeLength)]
+
+    let rndHole msk =
+        let rec tryPick m c =
+            let hl = rhole()
+            if m &&& hl.Mask = 0UL then hl
+            elif (c-1) > 0 then tryPick msk (c-1) 
+            else raise CantFindHole
+        tryPick msk 1000 

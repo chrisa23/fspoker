@@ -26,7 +26,7 @@ module Equity =
         let ev h = eval b h.Cards
         Array.map ev hls |> getWins
 
-    let evalHandsSub (hls:Hole[],bd) = 
+    let evalHandsSub (hls:Hole[]) bd = 
         Array.map (evalSub hls) bd
         |> Array.fold sumArrays (Array.create hls.Length 0.)
 
@@ -40,7 +40,16 @@ module Equity =
 
     let getRndBoards n msk = [|for p in 1..n -> rndBoard msk|] 
 
-    let runBoards n (msk,holes) = evalHandsSub (holes, getRndBoards n msk)
+    let runBoards n (msk,holes) = evalHandsSub holes (getRndBoards n msk)
+
+    let evalHands2 (ranges:Hole[]) x = 
+        let mask = ranges |> Array.fold (fun x y -> x &&& y.Mask) 0UL
+        let r =
+            (mask, ranges)
+            |> (runBoards x)//Can be parralel, but board choose function messes up with .Net Array.Parallel, but not with Flying Frog dll.
+            //|> Array.fold sumArrays (Array.create ranges.Length 0.)
+        let t = float (Array.sum r)
+        Array.map (fun x -> x/t) r
 
     let evalHands (ranges:Range[]) t x = 
         let r =

@@ -19,3 +19,8 @@ module HoleTests =
         "AdKd" |> hole |> cards |> hiRank |> should equal 12
         "AdKd" |> hole |> cards |> suited |> should equal true
         "AAo" |> holes |> Array.length |> should equal 6
+    
+    [<Test>] 
+    let RandomHole1() = 
+        let h = Holes.rndHole 0UL
+        h
