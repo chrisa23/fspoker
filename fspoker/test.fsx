@@ -1,4 +1,5 @@
-﻿#load "Cards.fs"
+﻿open System
+#load "Cards.fs"
 open fspoker
 open Cards
 #load "Holes.fs"
@@ -16,6 +17,9 @@ open Ranges
 #load "Equity.fs"
 open Equity
 
+let r = new Random((int)DateTime.Now.Ticks)
+let ri i = r.Next(i)
+
 let hls = getHoles [|"AKs";"22";"33";"AQo";|]
 
 
@@ -23,37 +27,37 @@ let hls2 = getHoles [|"AKs,AQs,AJs";"22,33,44,55,66,77";"33,44,55,66,77,88,99,TT
 
 let count = 200
 
-let rl = getXHoles hls2 count
+let rl = getXHoles hls2 count ri
 
 let col = count - Seq.length rl
 
 #time
 let h = 
     [for i in 1..20000 do
-        yield pickHoles hls2]
+        yield pickHoles hls2 ri]
 
 
 
 #time
-let eq = getEquities [|"AKs,AQs,AJs";"22,33,44,55,66,77";"33,44,55,66,77,88,99,TT";"AQo";|] 1000 100
+let eq = getEquities [|"AKs,AQs,AJs";"22,33,44,55,66,77";"33,44,55,66,77,88,99,TT";"AQo";|] 1000 100 ri
 #time
 
 #time
-let eq2a = getEquities [|"AAo";"XxXx";|] 1000 1000
-#time
-
-
-#time
-let eq1 =  getEquities [|"XxXx";"XxXx";"XxXx";"XxXx";"XxXx";"XxXx";"XxXx";|] 10000 1000
+let eq2a = getEquities [|"AAo";"XxXx";|] 1000 1000 ri
 #time
 
 
 #time
-let eq2 = getEquities [|"ATo";"TTo";|] 10000 100
+let eq1 =  getEquities [|"XxXx";"XxXx";"XxXx";"XxXx";"XxXx";"XxXx";"XxXx";|] 10000 1000 ri
+#time
+
+
+#time
+let eq2 = getEquities [|"ATo";"TTo";|] 10000 100 ri
 #time
 
 #time
-let eq3 = getEquities [|"XxXx";"XxXx";"XxXx";|] 1000 100
+let eq3 = getEquities [|"XxXx";"XxXx";"XxXx";|] 1000 100 ri
 #time
 //
 //hole169Map

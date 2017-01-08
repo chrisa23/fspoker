@@ -4,7 +4,7 @@ module Holes =
     open System
     open Cards
     
-    let private r = new Random((int)DateTime.Now.Ticks);
+    //let private r = new Random((int)DateTime.Now.Ticks)
     
     exception CantFindHole
     
@@ -110,11 +110,11 @@ module Holes =
 
     let index s = hole169IndexMap.[s] 
 
-    let rhole() = allHoles.[r.Next(holeLength)]
+    let rhole (ri: int -> int) = allHoles.[ri holeLength]
 
-    let rndHole msk =
+    let rndHole msk (ri: int -> int) =
         let rec tryPick m c =
-            let hl = rhole()
+            let hl = rhole  ri
             if m &&& hl.Mask = 0UL then hl
             elif (c-1) > 0 then tryPick msk (c-1) 
             else raise CantFindHole

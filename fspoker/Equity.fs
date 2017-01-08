@@ -9,8 +9,8 @@ module Equity =
     open Eval
     open Ranges
 
-    let private r = new Random((int)DateTime.Now.Ticks);
-    let rboard() = Boards.allBoards.[r.Next(bd5Lgth)]
+    //let private r = new Random((int)DateTime.Now.Ticks);
+    let rboard (ri: int -> int) = Boards.allBoards.[ri bd5Lgth]
 
     let getEmptyResult n = [for i in 1..n -> 0.]
    
@@ -30,31 +30,31 @@ module Equity =
         Array.map (evalSub hls) bd
         |> Array.fold sumArrays (Array.create hls.Length 0.)
 
-    let rndBoard msk =
+    let rndBoard msk (ri: int -> int) =
         let rec tryPick m c =
-            let bd = rboard()
+            let bd = rboard ri
             if m &&& (bd |> snd) = 0UL then bd |> fst
             elif (c-1) > 0 then tryPick msk (c-1) 
             else raise BadRange
         tryPick msk 1000 
 
-    let getRndBoards n msk = [|for p in 1..n -> rndBoard msk|] 
+    let getRndBoards n msk (ri: int -> int) = [|for p in 1..n -> rndBoard msk ri|] 
 
-    let runBoards n (msk,holes) = evalHandsSub holes (getRndBoards n msk)
+    let runBoards n (ri: int -> int) (msk,holes)  = evalHandsSub holes (getRndBoards n msk ri)
 
-    let evalHands2 (ranges:Hole[]) x = 
-        let mask = ranges |> Array.fold (fun x y -> x &&& y.Mask) 0UL
+    let evalHands2 (ri: int -> int) x mask (ranges:Hole[]) = 
+        //let mask = ranges |> Array.fold (fun x y -> x &&& y.Mask) 0UL
         let r =
             (mask, ranges)
-            |> (runBoards x)//Can be parralel, but board choose function messes up with .Net Array.Parallel, but not with Flying Frog dll.
+            |> (runBoards x ri)//Can be parralel, but board choose function messes up with .Net Array.Parallel, but not with Flying Frog dll.
             //|> Array.fold sumArrays (Array.create ranges.Length 0.)
         let t = float (Array.sum r)
         Array.map (fun x -> x/t) r
 
-    let evalHands (ranges:Range[]) t x = 
+    let evalHands (ranges:Range[]) t x (ri: int -> int) = 
         let r =
-            getXHoles ranges t
-            |> Array.map (runBoards x)//Can be parralel, but board choose function messes up with .Net Array.Parallel, but not with Flying Frog dll.
+            getXHoles ranges t ri
+            |> Array.map (runBoards x ri)//Can be parralel, but board choose function messes up with .Net Array.Parallel, but not with Flying Frog dll.
             |> Array.fold sumArrays (Array.create ranges.Length 0.)
         let t = float (Array.sum r)
         Array.map (fun x -> x/t) r

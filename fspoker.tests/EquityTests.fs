@@ -13,11 +13,13 @@ module EquityTests =
     open Ranges
     open Eval
     open Equity
+    open System
 
     [<Test;Ignore >]
     let EquityTest1() = 
         
-               
+        let r = new Random((int)DateTime.Now.Ticks)
+        let ri i = r.Next(i)
         let hls = getHoles [|"AKs";"22";"33";"AQo";|]
 
         hls |> Array.length |> should equal 4
@@ -26,7 +28,7 @@ module EquityTests =
 
         let count = 200
 
-        let rl = getXHoles hls2 count
+        let rl = getXHoles hls2 count ri
 
         rl |> Array.length |> should equal 200
 

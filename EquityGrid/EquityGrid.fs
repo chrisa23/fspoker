@@ -9,9 +9,12 @@ open fspoker
 open Cards
 open Holes
 open Equity
+open System
 
 type Board() as grid =
     inherit Controls.Grid(Margin=Thickness 1.0)
+    let r = new Random((int)DateTime.Now.Ticks)
+    let ri i = r.Next(i)
     let chk = new Controls.CheckBox()
     let button =
         Array2D.init 13 13 (fun _ _ ->  Controls.Button(FontSize = 14.))
@@ -21,7 +24,7 @@ type Board() as grid =
             let y = a.Value%13
             let x = a.Value/13
             let hls = Array.append [|a.Key;|] hls
-            let v = (getEquities hls 1000 10).[0]
+            let v = (getEquities hls 1000 10 ri).[0]
             if chk.IsChecked.HasValue && chk.IsChecked.Value then
                 button.[x,y].Content <- a.Key + "\n" +  ((1./v) - 1.).ToString("f2") + ":1"
             else

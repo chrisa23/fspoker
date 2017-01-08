@@ -7,7 +7,7 @@ module Ranges =
     open System
 
     //TODO:  improve random
-    let private r = new Random((int)DateTime.Now.Ticks)
+    //let private r = new Random((int)DateTime.Now.Ticks)
 
     type Range = 
         | Hole of Hole 
@@ -34,20 +34,20 @@ module Ranges =
                 | None -> None
                 | Some m -> Some (m,hls))
 
-    let pickHole hls = 
+    let pickHole (ri: int -> int) hls = 
         match hls with
         | Hole x -> x
-        | Range h -> List.nth h (r.Next(h.Length))
+        | Range h -> List.item (ri h.Length) h 
 
-    let pickHoles (ranges:Range[]) =  
+    let pickHoles (ranges:Range[]) (ri: int -> int)=  
         let rec tryPick h c=
-            let r = checkHoles (Array.map pickHole h)
+            let r = checkHoles (Array.map (pickHole  ri) h)
             match r with
             | None -> if (c-1) > 0 then tryPick h (c-1) else raise BadRange
             | Some (m,h) -> m, h
         tryPick ranges 100
 
-    let getXHoles (ranges:Range[]) x = [|for i in 1..x -> pickHoles ranges|]
+    let getXHoles (ranges:Range[]) x (ri: int -> int)= [|for i in 1..x -> pickHoles ranges ri|]
 
     let parseRange hl =
         match hl with

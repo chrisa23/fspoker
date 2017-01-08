@@ -4,11 +4,13 @@ module Eval =
 
     open System.IO
     
-    let private dataLocation = "X:\HandRanks.dat"
+    //let private dataLocation = "X:\HandRanks.dat"
 
-    let hr = 
-        [|  use br = new BinaryReader(File.OpenRead(dataLocation))
-            for i in 0..32487833 -> br.ReadInt32() |]
+    let mutable hr = [|0|]
+    
+    let load location = 
+        hr <- [| use br = new BinaryReader(File.OpenRead(location))
+                 for i in 0..32487833 -> br.ReadInt32() |]
 
     let eval7 a b c d e f g = hr.[hr.[hr.[hr.[hr.[hr.[hr.[53 + a] + b] + c] + d] + e] + f] + g]
     let eval6 a b c d e f  =hr.[hr.[hr.[hr.[hr.[hr.[hr.[53 + a] + b] + c] + d] + e] + f]]
